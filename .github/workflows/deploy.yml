@@ -36,6 +36,6 @@ jobs:
         with:
           project: "numio-home-be"
           entrypoint: "./main.ts"
-          root: "./"
+          root: "./src"
           
-          exclude: main
+          
