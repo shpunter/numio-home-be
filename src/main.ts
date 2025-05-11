@@ -3,19 +3,22 @@ import { cors } from "jsr:@hono/hono/cors";
 
 const app = new Hono();
 
-app.use('/api/*', cors())
 app.use(
-  '/api/*',
+  "/api/*",
   cors({
-    origin: '*',
-    allowHeaders: ['X-Custom-Header', 'Upgrade-Insecure-Requests'],
-    allowMethods: ['POST', 'GET', 'OPTIONS'],
-    exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
+    origin: "*",
+    allowMethods: ["GET", "POST", "PUT", "DELETE"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Type", "Authorization"],
     maxAge: 600,
     credentials: true,
-  })
-)
+  }),
+);
 
-app.get("/api/hey", (c) => c.text("Hello Deno!"));
+app.get("/api/hey", (c) => {
+  return c.json({
+    msg: "hello",
+  });
+});
 
 Deno.serve({ port: 8000 }, app.fetch);
