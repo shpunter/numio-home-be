@@ -1,4 +1,4 @@
-import { Hono } from "@hono/hono";
+import { Hono } from "jsr:@hono/hono";
 
 const app = new Hono();
 
