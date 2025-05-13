@@ -1,5 +1,6 @@
 import { Hono } from "jsr:@hono/hono";
 import { cors } from "jsr:@hono/hono/cors";
+import { data } from "./data.ts";
 
 const app = new Hono();
 
@@ -15,9 +16,18 @@ app.use(
   }),
 );
 
-app.get("/api/hey", (c) => {
+app.get("/api/benchmark/:type/:size/:base/:repeat", (c) => {
+  const { base, size, type, repeat } = c.req.param();
+
+  if (!data?.[type]?.[size].result?.[base]?.[repeat]) {
+    return c.json({ msg: "No such data" }, 400);
+  }
+
+  const { result, value } = data[type][size];
+
   return c.json({
-    msg: "hello",
+    value,
+    result: result[base][repeat],
   });
 });
 
