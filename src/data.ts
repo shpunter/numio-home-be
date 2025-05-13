@@ -13,7 +13,7 @@ export const data: Record<
       value: "999",
       result: {
         hex: {
-          "10": [
+          "1D": [
             [
               "@numio/bigmath",
               "347.7 ns",
@@ -33,7 +33,7 @@ export const data: Record<
               "23.9 µs",
             ],
           ],
-          "1000": [
+          "1K": [
             [
               "@numio/bigmath",
               "26.9 µs",
@@ -95,7 +95,7 @@ export const data: Record<
           ],
         },
         binary: {
-          "10": [
+          "1D": [
             [
               "@numio/bigmath",
               "391.1 ns",
@@ -115,7 +115,7 @@ export const data: Record<
               "16.6 µs",
             ],
           ],
-          "1000": [
+          "1K": [
             [
               "@numio/bigmath",
               "30.1 µs",
@@ -177,7 +177,7 @@ export const data: Record<
           ],
         },
         octal: {
-          "10": [
+          "1D": [
             [
               "@numio/bigmath",
               "361.0 ns",
@@ -197,7 +197,7 @@ export const data: Record<
               "26.6 µs",
             ],
           ],
-          "1000": [
+          "1K": [
             [
               "@numio/bigmath",
               "26.7 µs",
@@ -259,7 +259,7 @@ export const data: Record<
           ],
         },
         decimal: {
-          "10": [
+          "1D": [
             [
               "@numio/bigmath",
               "183.8 ns",
@@ -279,7 +279,7 @@ export const data: Record<
               "1.3 µs",
             ],
           ],
-          "1000": [
+          "1K": [
             [
               "@numio/bigmath",
               "9.0 µs",
