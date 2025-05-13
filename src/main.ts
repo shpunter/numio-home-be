@@ -15,7 +15,9 @@ app.use(
   }),
 );
 
-const kv = await Deno.openKv();
+const kv = await Deno.openKv(
+  "https://api.deno.com/databases/c9a7a255-e05e-423d-b6f6-b7c2c8a9d4ef/connect",
+);
 
 app.get("/api/benchmark/:type/:size/:base/:repeat", async (c) => {
   const { base, size, type, repeat } = c.req.param();
