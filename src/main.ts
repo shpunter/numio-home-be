@@ -1,6 +1,5 @@
 import { Hono } from "jsr:@hono/hono";
 import { cors } from "jsr:@hono/hono/cors";
-import { data } from "./data.ts";
 
 const app = new Hono();
 
@@ -16,18 +15,24 @@ app.use(
   }),
 );
 
-app.get("/api/benchmark/:type/:size/:base/:repeat", (c) => {
-  const { base, size, type, repeat } = c.req.param();
+const kv = await Deno.openKv();
 
-  if (!data?.[type]?.[size].result?.[base]?.[repeat]) {
-    return c.json({ msg: "No such data" }, 400);
+app.get("/api/benchmark/:type/:size/:base/:repeat", async (c) => {
+  const { base, size, type, repeat } = c.req.param();
+  const keys = ["benchmark", "time", "iter", "minmax", "p75", "p99", "p995"];
+  const numio = [];
+  const bignumber = [];
+
+  for await (const key of keys) {
+    numio.push((await kv.get([type, size, base, repeat, "numio", key])).value);
   }
 
-  const { result, value } = data[type][size];
+  for await (const key of keys) {
+    bignumber.push((await kv.get([type, size, base, repeat, "bignumber", key])).value);
+  }
 
   return c.json({
-    value,
-    result: result[base][repeat],
+    result: [numio, bignumber],
   });
 });
 
