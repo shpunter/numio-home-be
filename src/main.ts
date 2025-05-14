@@ -15,26 +15,24 @@ app.use(
   }),
 );
 
-const kv = await Deno.openKv(
-  "https://api.deno.com/databases/c9a7a255-e05e-423d-b6f6-b7c2c8a9d4ef/connect",
-);
+const kv = await Deno.openKv();
 
 app.get("/api/benchmark/:type/:size/:base/:repeat", async (c) => {
   const { base, size, type, repeat } = c.req.param();
-  const keys = ["benchmark", "time", "iter", "minmax", "p75", "p99", "p995"];
-  const numio = [];
-  const bignumber = [];
 
-  for await (const key of keys) {
-    numio.push((await kv.get([type, size, base, repeat, "numio", key])).value);
-  }
-
-  for await (const key of keys) {
-    bignumber.push((await kv.get([type, size, base, repeat, "bignumber", key])).value);
-  }
+  const numio = await Array.fromAsync(
+    kv.list({ prefix: [type, size, base, repeat, "numio"] }),
+  );
+  
+  const bignumber = await Array.fromAsync(
+    kv.list({ prefix: [type, size, base, repeat, "bignumber"] }),
+  );
 
   return c.json({
-    result: [numio, bignumber],
+    result: [
+      numio.sort((a, b) => +a.versionstamp - +b.versionstamp).map(({ value }) => value),
+      bignumber.sort((a, b) => +a.versionstamp - +b.versionstamp).map(({ value }) => value),
+    ],
   });
 });
 
