@@ -30,8 +30,8 @@ app.get("/api/benchmark/:type/:size/:base/:repeat", async (c) => {
 
   return c.json({
     result: [
-      numio.sort((a, b) => +a.versionstamp - +b.versionstamp).map(({ value }) => value),
-      bignumber.sort((a, b) => +a.versionstamp - +b.versionstamp).map(({ value }) => value),
+      numio.map(({ value }) => value),
+      bignumber.map(({ value }) => value),
     ],
   });
 });
