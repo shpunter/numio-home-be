@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --watch src/main.ts"
+    "dev": "deno run --allow-net --watch src/main.ts",
+    "res": "deno run --allow-read --allow-write --allow-net --unstable-kv --allow-env ./tmp/res.ts"
   },
   "imports": {
     "@hono/hono": "jsr:@hono/hono@^4.7.9",
